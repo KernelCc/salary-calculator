@@ -345,7 +345,7 @@ const deleteFromHistory = (id: string) => {
           </div>
         </div>
         <div class="conversion-info">
-           时薪 = ¥{{ monthlySalary }} ÷ {{ workDaysPerMonth }}天  {{ getWorkHoursPerDay().toFixed(1) }}小时 = ¥{{ hourlyWage }}/小时
+           时薪 = ¥{{ monthlySalary }} ÷ {{ workDaysPerMonth }}天 ÷ {{ getWorkHoursPerDay().toFixed(1) }}小时 = ¥{{ hourlyWage }}/小时
         </div>
       </template>
 
@@ -466,14 +466,26 @@ const deleteFromHistory = (id: string) => {
 </template>
 
 <style scoped>
+* {
+  box-sizing: border-box;
+}
+
 .calculator {
   background: white;
   border-radius: 24px;
-  padding: 32px;
+  padding: 24px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   max-width: 500px;
   margin: 0 auto;
   transition: background-color 0.3s, color 0.3s;
+}
+
+@media (max-width: 600px) {
+  .calculator {
+    padding: 16px;
+    border-radius: 0;
+    min-height: 100vh;
+  }
 }
 
 .calculator.dark-mode {
@@ -482,7 +494,7 @@ const deleteFromHistory = (id: string) => {
 
 .header {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .header-top {
@@ -493,9 +505,15 @@ const deleteFromHistory = (id: string) => {
 }
 
 .header h1 {
-  font-size: 24px;
+  font-size: 20px;
   color: #333;
   margin: 0;
+}
+
+@media (max-width: 600px) {
+  .header h1 {
+    font-size: 18px;
+  }
 }
 
 .dark-mode .header h1 {
@@ -508,14 +526,22 @@ const deleteFromHistory = (id: string) => {
 }
 
 .action-btn {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #f0f0f0;
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
   transition: all 0.3s;
+}
+
+@media (max-width: 600px) {
+  .action-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
 }
 
 .dark-mode .action-btn {
@@ -532,9 +558,16 @@ const deleteFromHistory = (id: string) => {
 }
 
 .current-time {
-  font-size: 18px;
+  font-size: 20px;
   color: #666;
   font-family: 'Courier New', monospace;
+}
+
+@media (max-width: 600px) {
+  .current-time {
+    font-size: 24px;
+    font-weight: bold;
+  }
 }
 
 .dark-mode .current-time {
@@ -544,9 +577,9 @@ const deleteFromHistory = (id: string) => {
 .earnings-display {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 16px;
-  padding: 32px;
+  padding: 28px 24px;
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .earnings-label {
@@ -555,12 +588,24 @@ const deleteFromHistory = (id: string) => {
   margin-bottom: 8px;
 }
 
+@media (max-width: 600px) {
+  .earnings-label {
+    font-size: 18px;
+  }
+}
+
 .earnings-amount {
-  font-size: 56px;
+  font-size: 48px;
   font-weight: bold;
   color: white;
   margin-bottom: 12px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 600px) {
+  .earnings-amount {
+    font-size: 56px;
+  }
 }
 
 .earnings-rate {
@@ -568,11 +613,17 @@ const deleteFromHistory = (id: string) => {
   color: rgba(255, 255, 255, 0.9);
 }
 
+@media (max-width: 600px) {
+  .earnings-rate {
+    font-size: 16px;
+  }
+}
+
 .progress-section {
   background: #f8f9fa;
   border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 24px;
+  padding: 16px;
+  margin-bottom: 20px;
 }
 
 .dark-mode .progress-section {
@@ -583,9 +634,15 @@ const deleteFromHistory = (id: string) => {
   display: flex;
   justify-content: space-between;
   margin-bottom: 12px;
-  font-size: 14px;
+  font-size: 16px;
   color: #666;
   font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .progress-info {
+    font-size: 18px;
+  }
 }
 
 .dark-mode .progress-info {
@@ -598,6 +655,12 @@ const deleteFromHistory = (id: string) => {
   height: 20px;
   overflow: hidden;
   margin-bottom: 12px;
+}
+
+@media (max-width: 600px) {
+  .progress-bar {
+    height: 24px;
+  }
 }
 
 .dark-mode .progress-bar {
@@ -614,8 +677,16 @@ const deleteFromHistory = (id: string) => {
 .time-info {
   display: flex;
   justify-content: space-between;
-  font-size: 13px;
+  font-size: 14px;
   color: #666;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 600px) {
+  .time-info {
+    font-size: 16px;
+  }
 }
 
 .dark-mode .time-info {
@@ -625,19 +696,27 @@ const deleteFromHistory = (id: string) => {
 .mode-switch {
   display: flex;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .mode-btn {
   flex: 1;
-  padding: 10px 16px;
-  font-size: 14px;
+  padding: 12px 16px;
+  font-size: 16px;
   border: 2px solid #e0e0e0;
-  border-radius: 8px;
+  border-radius: 10px;
   background: white;
   color: #666;
   cursor: pointer;
   transition: all 0.3s;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .mode-btn {
+    padding: 14px 16px;
+    font-size: 17px;
+  }
 }
 
 .dark-mode .mode-btn {
@@ -657,7 +736,7 @@ const deleteFromHistory = (id: string) => {
 }
 
 .controls {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .input-group {
@@ -666,10 +745,16 @@ const deleteFromHistory = (id: string) => {
 
 .input-group label {
   display: block;
-  font-size: 14px;
+  font-size: 16px;
   color: #666;
   margin-bottom: 8px;
-  font-weight: 500;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .input-group label {
+    font-size: 17px;
+  }
 }
 
 .dark-mode .input-group label {
@@ -679,13 +764,22 @@ const deleteFromHistory = (id: string) => {
 .salary-input,
 .hourly-input {
   width: 100%;
-  padding: 12px 16px;
-  font-size: 18px;
+  padding: 16px;
+  font-size: 22px;
   border: 2px solid #e0e0e0;
   border-radius: 12px;
   outline: none;
   transition: border-color 0.3s;
   background: white;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .salary-input,
+  .hourly-input {
+    padding: 18px;
+    font-size: 24px;
+  }
 }
 
 .dark-mode .salary-input,
@@ -697,13 +791,21 @@ const deleteFromHistory = (id: string) => {
 
 .small-input {
   width: 100%;
-  padding: 10px 12px;
-  font-size: 16px;
+  padding: 14px;
+  font-size: 18px;
   border: 2px solid #e0e0e0;
   border-radius: 10px;
   outline: none;
   transition: border-color 0.3s;
   background: white;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .small-input {
+    padding: 16px;
+    font-size: 20px;
+  }
 }
 
 .dark-mode .small-input {
@@ -733,13 +835,20 @@ const deleteFromHistory = (id: string) => {
 }
 
 .time-display-static {
-  padding: 10px 12px;
-  font-size: 16px;
+  padding: 14px;
+  font-size: 18px;
   color: #333;
   font-weight: 600;
   background: #f8f9fa;
   border-radius: 10px;
   text-align: center;
+}
+
+@media (max-width: 600px) {
+  .time-display-static {
+    padding: 16px;
+    font-size: 20px;
+  }
 }
 
 .dark-mode .time-display-static {
@@ -749,12 +858,19 @@ const deleteFromHistory = (id: string) => {
 
 .conversion-info {
   background: #e8f4fd;
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 13px;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 14px;
   color: #31708f;
   margin-bottom: 16px;
   line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .conversion-info {
+    font-size: 16px;
+    padding: 16px;
+  }
 }
 
 .dark-mode .conversion-info {
@@ -779,6 +895,12 @@ const deleteFromHistory = (id: string) => {
   margin-bottom: 16px;
 }
 
+@media (max-width: 600px) {
+  .work-time-settings h3 {
+    font-size: 18px;
+  }
+}
+
 .dark-mode .work-time-settings h3 {
   color: #fff;
 }
@@ -800,6 +922,12 @@ const deleteFromHistory = (id: string) => {
   margin-bottom: 16px;
 }
 
+@media (max-width: 600px) {
+  .history-section h3 {
+    font-size: 18px;
+  }
+}
+
 .dark-mode .history-section h3 {
   color: #fff;
 }
@@ -808,6 +936,13 @@ const deleteFromHistory = (id: string) => {
   text-align: center;
   color: #999;
   padding: 20px;
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .empty-history {
+    font-size: 16px;
+  }
 }
 
 .dark-mode .empty-history {
@@ -822,10 +957,16 @@ const deleteFromHistory = (id: string) => {
 
 .history-item {
   background: white;
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 8px;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 10px;
   border: 1px solid #e0e0e0;
+}
+
+@media (max-width: 600px) {
+  .history-item {
+    padding: 16px;
+  }
 }
 
 .dark-mode .history-item {
@@ -837,12 +978,19 @@ const deleteFromHistory = (id: string) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .history-name {
   font-weight: 600;
   color: #333;
+  font-size: 15px;
+}
+
+@media (max-width: 600px) {
+  .history-name {
+    font-size: 17px;
+  }
 }
 
 .dark-mode .history-name {
@@ -850,15 +998,23 @@ const deleteFromHistory = (id: string) => {
 }
 
 .delete-btn {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   background: #ff4444;
   color: white;
-  font-size: 12px;
+  font-size: 14px;
   cursor: pointer;
   transition: background 0.3s;
+}
+
+@media (max-width: 600px) {
+  .delete-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
 }
 
 .delete-btn:hover {
@@ -868,10 +1024,17 @@ const deleteFromHistory = (id: string) => {
 .history-item-details {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  font-size: 12px;
+  gap: 10px;
+  font-size: 13px;
   color: #666;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+  .history-item-details {
+    font-size: 15px;
+    gap: 12px;
+  }
 }
 
 .dark-mode .history-item-details {
@@ -885,8 +1048,14 @@ const deleteFromHistory = (id: string) => {
 }
 
 .history-date {
-  font-size: 11px;
+  font-size: 12px;
   color: #999;
+}
+
+@media (max-width: 600px) {
+  .history-date {
+    font-size: 13px;
+  }
 }
 
 .dark-mode .history-date {
@@ -894,14 +1063,22 @@ const deleteFromHistory = (id: string) => {
 }
 
 .load-btn {
-  padding: 4px 12px;
+  padding: 6px 14px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   background: #667eea;
   color: white;
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
   transition: background 0.3s;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .load-btn {
+    padding: 8px 16px;
+    font-size: 15px;
+  }
 }
 
 .load-btn:hover {
@@ -910,17 +1087,27 @@ const deleteFromHistory = (id: string) => {
 
 .save-section {
   display: flex;
-  gap: 8px;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .history-name-input {
   flex: 1;
-  padding: 10px 12px;
+  min-width: 150px;
+  padding: 12px;
   border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: 10px;
+  font-size: 15px;
   outline: none;
   transition: border-color 0.3s;
+}
+
+@media (max-width: 600px) {
+  .history-name-input {
+    width: 100%;
+    padding: 14px;
+    font-size: 17px;
+  }
 }
 
 .dark-mode .history-name-input {
@@ -934,14 +1121,23 @@ const deleteFromHistory = (id: string) => {
 }
 
 .save-btn {
-  padding: 10px 16px;
+  padding: 12px 20px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   font-size: 14px;
   cursor: pointer;
   transition: transform 0.3s;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .save-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 16px;
+  }
 }
 
 .save-btn:hover {
@@ -950,9 +1146,15 @@ const deleteFromHistory = (id: string) => {
 
 .tips {
   text-align: center;
-  font-size: 12px;
+  font-size: 13px;
   color: #999;
   line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .tips {
+    font-size: 15px;
+  }
 }
 
 .dark-mode .tips {
