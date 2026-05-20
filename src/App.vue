@@ -161,6 +161,13 @@ const formatTime = (date: Date): string => {
   return `${hours}:${minutes}:${seconds}`
 }
 
+const isAfterWork = computed(() => {
+  const now = currentTime.value
+  const nowMinutes = now.getHours() * 60 + now.getMinutes()
+  const workEnd = parseTimeToMinutes(workEndTime.value)
+  return nowMinutes >= workEnd
+})
+
 const getCurrentWorkMinutes = computed(() => {
   const now = currentTime.value
   const nowMinutes = now.getHours() * 60 + now.getMinutes()
@@ -171,8 +178,13 @@ const getCurrentWorkMinutes = computed(() => {
   const lunchStartMin = parseTimeToMinutes(lunchStart.value)
   const lunchEndMin = parseTimeToMinutes(lunchEnd.value)
   
-  if (nowMinutes < workStart || nowMinutes >= workEnd) {
+  if (nowMinutes < workStart) {
     return 0
+  }
+  
+  if (nowMinutes >= workEnd) {
+    const totalWorkMinutes = workEnd - workStart - (lunchEndMin - lunchStartMin)
+    return Math.max(0, totalWorkMinutes)
   }
   
   let workedMinutes = nowMinutes - workStart
@@ -201,12 +213,16 @@ const dailyWage = computed(() => {
 })
 
 const todayEarnings = computed(() => {
+  if (isAfterWork.value) {
+    return dailyWage.value
+  }
   return workedHours.value * hourlyWage.value
 })
 
 const workProgress = computed(() => {
   const totalMinutes = getWorkHoursPerDay() * 60
   if (totalMinutes === 0) return 0
+  if (isAfterWork.value) return 100
   return Math.min(100, (getCurrentWorkMinutes.value / totalMinutes) * 100)
 })
 
@@ -291,6 +307,9 @@ const deleteFromHistory = (id: string) => {
           时薪 ¥{{ hourlyWage }} | 
           日薪 ¥{{ dailyWage.toFixed(2) }}
         </div>
+      <div v-if="isAfterWork" class="after-work-reminder">
+        🎉 下班啦！今天辛苦了！
+      </div>
     </div>
 
     <div class="progress-section">
@@ -626,6 +645,32 @@ const deleteFromHistory = (id: string) => {
 @media (max-width: 600px) {
   .earnings-rate {
     font-size: 16px;
+  }
+}
+
+.after-work-reminder {
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-size: 14px;
+  color: white;
+  animation: bounce 1s infinite;
+}
+
+@media (max-width: 600px) {
+  .after-work-reminder {
+    font-size: 16px;
+    padding: 12px 18px;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
   }
 }
 
