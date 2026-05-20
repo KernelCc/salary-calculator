@@ -135,7 +135,7 @@ const saveHistory = () => {
 const calculateHourlyFromMonthly = () => {
   const monthly = monthlySalary.value || 0
   const days = workDaysPerMonth.value || 22
-  const dailyHours = getWorkHoursPerDay()
+  const dailyHours = 8
   hourlyWage.value = Math.round((monthly / days / dailyHours) * 100) / 100
 }
 
@@ -345,7 +345,7 @@ const deleteFromHistory = (id: string) => {
           </div>
         </div>
         <div class="conversion-info">
-           时薪 = ¥{{ monthlySalary }} ÷ {{ workDaysPerMonth }}天 ÷ {{ getWorkHoursPerDay().toFixed(1) }}小时 = ¥{{ hourlyWage }}/小时
+           时薪 = ¥{{ monthlySalary }} ÷ {{ workDaysPerMonth }}天 ÷ 8小时 = ¥{{ hourlyWage }}/小时
         </div>
       </template>
 
