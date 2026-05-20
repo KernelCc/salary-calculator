@@ -59,7 +59,7 @@ onUnmounted(() => {
   }
 })
 
-watch([monthlySalary, workDaysPerMonth], () => {
+watch([monthlySalary, workDaysPerMonth, workStartTime, workEndTime, lunchStart, lunchEnd], () => {
   if (mode.value === 'monthly') {
     calculateHourlyFromMonthly()
   }
@@ -135,7 +135,7 @@ const saveHistory = () => {
 const calculateHourlyFromMonthly = () => {
   const monthly = monthlySalary.value || 0
   const days = workDaysPerMonth.value || 22
-  const dailyHours = 8
+  const dailyHours = getWorkHoursPerDay()
   hourlyWage.value = Math.round((monthly / days / dailyHours) * 100) / 100
 }
 
@@ -188,6 +188,16 @@ const getCurrentWorkMinutes = computed(() => {
 
 const workedHours = computed(() => {
   return getCurrentWorkMinutes.value / 60
+})
+
+const dailyWage = computed(() => {
+  if (mode.value === 'monthly') {
+    const monthly = monthlySalary.value || 0
+    const days = workDaysPerMonth.value || 22
+    return monthly / days
+  } else {
+    return hourlyWage.value * getWorkHoursPerDay()
+  }
 })
 
 const todayEarnings = computed(() => {
@@ -278,9 +288,9 @@ const deleteFromHistory = (id: string) => {
       <div class="earnings-label">今日已挣</div>
       <div class="earnings-amount">¥{{ formatCurrency(todayEarnings) }}</div>
       <div class="earnings-rate">
-        时薪 ¥{{ hourlyWage }} | 
-        日薪 ¥{{ (hourlyWage * getWorkHoursPerDay()).toFixed(2) }}
-      </div>
+          时薪 ¥{{ hourlyWage }} | 
+          日薪 ¥{{ dailyWage.toFixed(2) }}
+        </div>
     </div>
 
     <div class="progress-section">
@@ -345,7 +355,7 @@ const deleteFromHistory = (id: string) => {
           </div>
         </div>
         <div class="conversion-info">
-           时薪 = ¥{{ monthlySalary }} ÷ {{ workDaysPerMonth }}天 ÷ 8小时 = ¥{{ hourlyWage }}/小时
+           时薪 = ¥{{ monthlySalary }} ÷ {{ workDaysPerMonth }}天 ÷ {{ getWorkHoursPerDay().toFixed(1) }}小时 = ¥{{ hourlyWage }}/小时
         </div>
       </template>
 
